@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Price Prediction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+    <div style="color:black; font-family:Helvetica;">
+        <form action="{{ url_for('predict')}}" method="post">
+            <h2>Predictive Analysis : Car Resale Price</h2>
+            <br>
+            <p>Which year you bought the car? <input id="first" name="Year" type="number"></p>
+
+            <p>What is the showroom price? (In lakhs) <input id="second" name="Present_Price" required="required"></p>
+            <p>How many kilometers drived? <input id="third" name="Kms_Driven" required="required"></p>
+            <p>How many owners previously had the car (eg. 0/1/3)? <input id="fourth" name="Owner" required="required">
+            </p>
+            <p>What Is the fuel type?
+                <select name="Fuel_Type" id="fuel" required="required">
+                    <option value="Petrol">Petrol</option>
+                    <option value="Diesel">Diesel</option>
+                    <option value="CNG">CNG</option>
+                </select>
+            </p>
+            <p>Are you a dealer or individual? <select name="Seller_Type" id="resea" required="required">
+                    <option value="Dealer">Dealer</option>
+                    <option value="Individual">Individual</option>
+                </select></p>
+            <p>Transmission type of the car? <select name="Transmission" id="research" required="required">
+                    <option value="Mannual">Manual Car</option>
+                    <option value="Automatic">Automatic Car</option>
+                </select></p>
+            <br><button id="sub" type="submit "><b>CALCULATE</b></button>
+        </form>
+
+        <p style="color:rgb(206, 82, 82);">{{ prediction_text }}</p>
+    </div>
+
+    <div class="footer">
+        <p>
+            <a style="font-size: 20px;" href="https://github.com/suranjitpartho?tab=repositories"
+                class="fa fa-github"></a>
+            <a style="font-size: 18px;" href="https://www.linkedin.com/in/suranjitpartho/" class="fa fa-linkedin"></a>
+            <a style="font-size: 16px;" href="https://www.facebook.com/suranjitpartho/" class="fa fa-facebook"></a>
+        <p>Developed by Suranjit Das Partho</p>
+        </p>
+    </div>
+
+
+
+
+
+
+
+    <style>
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: rgb(71, 71, 71);
+            color: rgb(207, 205, 205);
+            font-size: 11px;
+            font-family: Helvetica;
+        }
+
+        .fa {
+            color: rgb(207, 205, 205);
+            text-align: center;
+            width: 38px;
+            text-decoration: none;
+        }
+
+        .fa:hover {
+            opacity: 0.7;
+        }
+
+
+        body {
+            background-color: rgb(243, 243, 243);
+            text-align: center;
+            padding: 2px;
+        }
+
+        #research {
+            font-size: 18px;
+            width: 100px;
+            height: 23px;
+            top: 23px;
+        }
+
+        #box {
+            border-radius: 10px;
+            border-color: 10px;
+            border-style: solid;
+            font-family: monospace;
+            text-align: center;
+            background-color: rgb(168, 131, 61);
+            font-size: medium;
+            position: absolute;
+            width: 900px;
+            bottom: 9%;
+            height: 850px;
+            right: 30%;
+            padding: 0px;
+            margin: 0px;
+            font-size: 14px;
+        }
+
+        #fuel {
+            width: 140px;
+            height: 30px;
+            text-align: center;
+            border-radius: 10px;
+            border-color: rgb(216, 216, 216);
+            border-style: solid;
+            font-size: 14px;
+        }
+
+        #fuel:hover {
+            background-color: rgb(228, 246, 176);
+        }
+
+        #research {
+            width: 140px;
+            height: 30px;
+            text-align: center;
+            border-radius: 10px;
+            border-color: rgb(216, 216, 216);
+            border-style: solid;
+            font-size: 14px;
+        }
+
+        #research:hover {
+            background-color: rgb(228, 246, 176);
+        }
+
+        #resea {
+            width: 140px;
+            height: 30px;
+            text-align: center;
+            border-radius: 10px;
+            border-color: rgb(216, 216, 216);
+            border-style: solid;
+            font-size: 14px;
+        }
+
+        #resea:hover {
+            background-color: rgb(228, 246, 176);
+        }
+
+        #sub {
+            width: 140px;
+            height: 32px;
+            text-align: center;
+            border-radius: 15px;
+            border-color: rgb(231, 70, 111);
+            border-style: solid;
+            font-size: 14px;
+            color: rgb(248, 248, 248);
+            background-color: rgb(248, 118, 151);
+        }
+
+        #sub:hover {
+            background-color: rgb(248, 63, 109);
+        }
+
+        #first {
+            width: 65px;
+            border-radius: 10px;
+            border-color: rgb(216, 216, 216);
+            border-style: solid;
+            border-width: thin;
+            height: 25px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        #second {
+            width: 65px;
+            border-radius: 10px;
+            border-color: rgb(216, 216, 216);
+            border-style: solid;
+            border-width: thin;
+            height: 25px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        #third {
+            width: 65px;
+            border-radius: 10px;
+            border-color: rgb(216, 216, 216);
+            border-style: solid;
+            border-width: thin;
+            height: 25px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        #fourth {
+            width: 65px;
+            border-radius: 10px;
+            border-color: rgb(216, 216, 216);
+            border-style: solid;
+            border-width: thin;
+            height: 25px;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</body>
+
+</html>
